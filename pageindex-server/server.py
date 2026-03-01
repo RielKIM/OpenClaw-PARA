@@ -17,7 +17,7 @@ import searcher
 from store import get_doc_id, delete_tree
 
 VERSION = "0.1.0"
-PORT = int(os.getenv("PAGEINDEX_PORT", "37779"))
+PORT    = int(os.getenv("PAGEINDEX_PORT", "37779"))
 
 app = FastAPI(title="PageIndex Local Server", version=VERSION)
 
@@ -51,30 +51,42 @@ def health():
 
 @app.post("/index")
 def index(req: IndexRequest):
-    # TODO: indexer.index_file() 호출
-    # TODO: 파일 없으면 HTTPException(404)
-    raise NotImplementedError
+    try:
+        result = indexer.index_file(req.file_path, req.project_id, req.category)
+    except FileNotFoundError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    except RuntimeError as e:
+        raise HTTPException(status_code=503, detail=str(e))
+    return result
 
 
 @app.delete("/index")
 def delete_index(req: DeleteIndexRequest):
-    # TODO: store.delete_tree() 호출
-    # TODO: doc_id 없으면 HTTPException(404)
-    raise NotImplementedError
+    doc_id = get_doc_id(req.file_path)
+    deleted = delete_tree(doc_id)
+    if not deleted:
+        raise HTTPException(status_code=404, detail=f"인덱스를 찾을 수 없습니다: {req.file_path}")
+    return {"deleted": True, "doc_id": doc_id}
 
 
 @app.post("/reindex")
 def reindex(req: ReindexRequest):
-    # TODO: indexer.reindex_item() 호출
-    # TODO: 디렉토리 없으면 HTTPException(404)
-    raise NotImplementedError
+    try:
+        result = indexer.reindex_item(req.item_path)
+    except NotADirectoryError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    return result
 
 
 @app.post("/search")
 def search(req: SearchRequest):
-    # TODO: searcher.search() 호출
-    # TODO: (results, query_ms) → { results, query_ms } 반환
-    raise NotImplementedError
+    results, query_ms = searcher.search(
+        query=req.query,
+        project_id=req.project_id,
+        category=req.category,
+        limit=req.limit,
+    )
+    return {"results": results, "query_ms": query_ms}
 
 
 # ── 직접 실행 ─────────────────────────────────────────────────
