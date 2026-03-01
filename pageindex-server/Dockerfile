@@ -7,10 +7,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-VOLUME ["/root/.openclaw/workspace/.pageindex"]
-
 ENV OPENAI_API_KEY=""
-ENV PAGEINDEX_DATA_DIR="/root/.openclaw/workspace/.pageindex"
+ENV PAGEINDEX_DATA_DIR=""
 ENV PAGEINDEX_PORT="37779"
 
 EXPOSE 37779

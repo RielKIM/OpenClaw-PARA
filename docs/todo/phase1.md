@@ -38,12 +38,19 @@
 - [x] `.dockerignore` — `__pycache__`, `.env`, `.git` 제외
 - [x] `.env.example` — `OPENAI_API_KEY`, `PAGEINDEX_DATA_DIR`, `PAGEINDEX_PORT`
 
-### 검증 (미완료)
-- [ ] `docker compose up --build` 빌드 성공 확인
-- [ ] `GET /health` → `{"status":"ok"}` 응답 확인
-- [ ] `POST /index` → `.tree.json`, `.meta.json` 생성 확인
-- [ ] `POST /search` → LLM 추론 결과 반환 확인
-- [ ] 볼륨 마운트: 컨테이너 재시작 후 인덱스 유지 확인
+### 수정 사항 (pageindex 라이브러리 이슈)
+- [x] `pageindex` 라이브러리가 VectifyAI 클라우드 API(PDF 전용)임을 확인 → `md_to_tree` 미제공
+- [x] `indexer.py`: 자체 마크다운 헤딩 기반 파서 구현 (`_parse_md_tree`)
+- [x] `requirements.txt`: `pageindex` 의존성 제거
+- [x] `docker-compose.yml`: 볼륨 마운트를 `${HOME}/.openclaw/workspace` 전체로 확장 (file_path 동일 경로 보장)
+- [x] `Dockerfile`: 하드코딩 경로 제거
+
+### 검증
+- [x] `docker compose up --build` 빌드 성공 확인
+- [x] `GET /health` → `{"status":"ok","version":"0.1.0"}` 확인
+- [x] `POST /index` → `doc_id`, `node_count: 8`, `.tree.json` + `.meta.json` 생성 확인
+- [x] `POST /search` → LLM 추론으로 "예산 계획"(1.2), "3일차 스노클링"(1.3.3) 정확 반환 확인
+- [x] 컨테이너 재시작 후 인덱스 유지 확인 (볼륨 퍼시스턴스)
 
 ---
 
