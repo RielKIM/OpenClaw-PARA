@@ -1,0 +1,43 @@
+{
+  "id": "para-memory",
+  "name": "PARA Memory",
+  "description": "PARA 방법론(Projects/Areas/Resources/Archive)으로 OpenClaw 메모리를 조직화하고, PARA Hub를 통해 익명화된 지식을 공유합니다.",
+  "version": "0.1.0",
+  "configSchema": {
+    "type": "object",
+    "properties": {
+      "memoryPath": {
+        "type": "string",
+        "description": "PARA 메모리 루트 경로 (기본: ~/.openclaw/workspace/memory)"
+      },
+      "pageIndexServerUrl": {
+        "type": "string",
+        "default": "http://localhost:37779",
+        "description": "PageIndex 로컬 서버 URL (pageindex-server/ 참조)"
+      },
+      "pageIndexEnabled": {
+        "type": "boolean",
+        "default": true,
+        "description": "PageIndex 검색 활성화 여부 (서버 미실행 시 자동 비활성화)"
+      },
+      "openaiApiKey": {
+        "type": "string",
+        "description": "OpenAI API Key (intent-classifier LLM 폴백용)"
+      },
+      "hubEnabled": {
+        "type": "boolean",
+        "default": false,
+        "description": "PARA Hub 연동 활성화 (Phase 2)"
+      },
+      "hubApiUrl": {
+        "type": "string",
+        "description": "PARA Hub API URL (Phase 2)"
+      },
+      "flEnabled": {
+        "type": "boolean",
+        "default": false,
+        "description": "연합 학습 참여 여부 (Phase 3, 옵트인)"
+      }
+    }
+  }
+}

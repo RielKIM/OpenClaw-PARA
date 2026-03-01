@@ -1,0 +1,29 @@
+{
+  "name": "@openclaw-para/plugin",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "build":         "tsdown src/index.ts",
+    "dev":           "tsdown src/index.ts --watch",
+    "test":          "vitest",
+    "test:coverage": "vitest --coverage",
+    "typecheck":     "tsc --noEmit",
+    "install:local": "openclaw plugin install . --mode install",
+    "reinstall":     "openclaw plugin uninstall para-memory && openclaw plugin install . --mode install"
+  },
+  "dependencies": {
+    "openai": "^6.25.0"
+  },
+  "devDependencies": {
+    "@openclaw/plugin-sdk": "latest",
+    "@types/node": "^22.0.0",
+    "tsdown": "latest",
+    "typescript": "^5.7.0",
+    "vitest": "^2.0.0"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

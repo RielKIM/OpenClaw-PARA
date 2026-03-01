@@ -1,0 +1,16 @@
+services:
+  pageindex-server:
+    build: .
+    ports:
+      - "127.0.0.1:37779:37779"
+    volumes:
+      - ~/.openclaw/workspace/.pageindex:/root/.openclaw/workspace/.pageindex
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - PAGEINDEX_DATA_DIR=/root/.openclaw/workspace/.pageindex
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:37779/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
