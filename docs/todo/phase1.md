@@ -26,10 +26,24 @@
 
 ## 1. pageindex-server (Python)
 
+### 코드 구현
 - [x] `store.py` — `save_tree`, `load_meta`, `load_tree`, `delete_tree`, `list_docs`
 - [x] `indexer.py` — `index_file`, `reindex_item`
 - [x] `searcher.py` — `_build_tree_summary`, `_extract_nodes`, `search`
 - [x] `server.py` — `POST /index`, `DELETE /index`, `POST /reindex`, `POST /search`
+
+### Docker 인프라
+- [x] `Dockerfile` — python:3.11-slim, requirements 설치, uvicorn 실행
+- [x] `docker-compose.yml` — 포트 바인딩, 볼륨 마운트, healthcheck
+- [x] `.dockerignore` — `__pycache__`, `.env`, `.git` 제외
+- [x] `.env.example` — `OPENAI_API_KEY`, `PAGEINDEX_DATA_DIR`, `PAGEINDEX_PORT`
+
+### 검증 (미완료)
+- [ ] `docker compose up --build` 빌드 성공 확인
+- [ ] `GET /health` → `{"status":"ok"}` 응답 확인
+- [ ] `POST /index` → `.tree.json`, `.meta.json` 생성 확인
+- [ ] `POST /search` → LLM 추론 결과 반환 확인
+- [ ] 볼륨 마운트: 컨테이너 재시작 후 인덱스 유지 확인
 
 ---
 
