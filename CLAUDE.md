@@ -93,6 +93,9 @@ docs/arch/HLD/
 - 기능별 상세 설계 문서와 구현 TODO 파일 관리
 - Claude가 자유롭게 생성·수정 가능
 - 파일명 형식: `YYYY-MM-DD-{feature}-todo.md`
+- **각 섹션마다 반드시 `### 검증` 항목을 포함할 것** (구현 항목과 분리)
+  - 검증은 실제로 확인 가능한 구체적 기준으로 작성 (반환값, 파일 생성 여부 등)
+  - 구조: `### 코드 구현` → `### 검증` 순서 유지
 
 ### docs/memory-docs/ — 로컬 메모리 + 에러 이력
 
@@ -224,7 +227,7 @@ Step 9. dev-progress.md 업데이트 + 브랜치 완료
 
 - **현재 단계**: Design Phase — 코드 구현 미시작
 - **Plugin 런타임**: Node.js >=22 / TypeScript (OpenClaw 플러그인)
-- **Plugin 저장소**: Markdown 파일 + LanceDB (로컬, `~/.openclaw/workspace/memory/`)
+- **Plugin 저장소**: Markdown 파일 + PageIndex 서버 (로컬, `~/.openclaw/workspace/memory/`)
 - **Hub 백엔드**: Python 3.11+ / FastAPI (Phase 2 예정)
 - **Hub DB**: PostgreSQL 15 + Redis 7 + S3 (Phase 2 예정)
 - **임베딩**: OpenAI text-embedding-3-large
